@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.medbridge.global/sitemap.xml
+
+# Disallow admin or private paths if added later
+Disallow: /admin/
+Disallow: /private/
