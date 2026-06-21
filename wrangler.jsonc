@@ -1,23 +1,28 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "cloudflare-blog-cms",
-  "pages_build_output_dir": "./public",
-  "compatibility_date": "2026-06-21",
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "medbridge-blog",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
-      "migrations_dir": "migrations"
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "MEDIA",
-      "bucket_name": "medbridge-blog-media"
-    }
-  ],
-  "vars": {
-    "ADMIN_EMAILS": "your@email.com"
-  }
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-blog-cms",
+	"pages_build_output_dir": "./public",
+	"compatibility_date": "2026-06-21",
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "medbridge-blog",
+			"database_id": "5b01766c-87a4-4005-8d2d-6a92ebc3e123",
+			"migrations_dir": "migrations"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "medbridge-blog-media"
+		},
+		{
+			"bucket_name": "medbridge-blog-media",
+			"binding": "medbridge_blog_media",
+			"remote": true
+		}
+	],
+	"vars": {
+		"ADMIN_EMAILS": "jclionellim@gmail.com"
+	}
 }
