@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Healthcare Market Access Insights | Medbridge</title>
+<meta name="description" content="Insights, guides and updates on medical device market access, regulatory registration and healthcare logistics across Hong Kong, Singapore, Malaysia and Thailand.">
+<meta property="og:title" content="Blog — Healthcare Market Access Insights | Medbridge">
+<meta property="og:description" content="Insights, guides and updates on medical device market access across Hong Kong, Singapore, Malaysia and Thailand.">
+<meta property="og:image" content="https://www.medbridge-global.com/images/og-default.png">
+<meta property="og:url" content="https://www.medbridge-global.com/pages/blog/index.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.medbridge-global.com/pages/blog/index.html">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#062F5A;
+  --teal:#42B2A9;
+  --teal-hover:#35978F;
+  --slate:#68737D;
+  --aqua:#EAF7F5;
+  --grey:#F3F5F7;
+  --white:#FFFFFF;
+  --text:#1a2a3a;
+  --border:#e2e8f0;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;color:var(--text);background:var(--white);line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;height:64px;gap:2rem}
+.nav-logo img{height:36px;width:auto}
+.nav-links{display:flex;align-items:center;gap:0;list-style:none;flex:1}
+.nav-links li{position:relative}
+.nav-links a{display:block;padding:0.5rem 0.875rem;font-size:14px;color:var(--slate);font-weight:500;white-space:nowrap;transition:color 0.15s}
+.nav-links a:hover{color:var(--navy)}
+.nav-links .dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0;min-width:220px;box-shadow:0 8px 24px rgba(6,47,90,0.1);z-index:200}
+.nav-links li:hover .dropdown-menu{display:block}
+.dropdown-menu a{padding:0.5rem 1rem;font-size:14px;color:var(--slate);display:block}
+.dropdown-menu a:hover{color:var(--navy);background:var(--grey)}
+.nav-cta{margin-left:auto;background:var(--teal);color:var(--white)!important;padding:0.5rem 1.125rem!important;border-radius:6px;font-size:14px;font-weight:600;white-space:nowrap;transition:background 0.15s}
+.nav-cta:hover{background:var(--teal-hover)!important;color:var(--white)!important}
+
+/* BREADCRUMB */
+.breadcrumb{background:var(--grey);border-bottom:1px solid var(--border)}
+.breadcrumb-inner{max-width:1140px;margin:0 auto;padding:0.625rem 1.5rem;font-size:13px;color:var(--slate);display:flex;gap:0.375rem;align-items:center}
+.breadcrumb-inner a{color:var(--slate)}
+.breadcrumb-inner a:hover{color:var(--navy)}
+.breadcrumb-inner span{opacity:0.5}
+
+/* HERO */
+.blog-hero{background:var(--navy);padding:4rem 1.5rem 3.5rem;text-align:center}
+.blog-hero .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem}
+.blog-hero h1{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:var(--white);margin-bottom:1rem;line-height:1.2}
+.blog-hero p{font-size:1.0625rem;color:rgba(255,255,255,0.7);max-width:560px;margin:0 auto}
+
+/* FILTER BAR */
+.filter-bar{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.filter-bar-inner{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:0.5rem;overflow-x:auto;padding:1rem 0;scrollbar-width:none}
+.filter-bar-inner::-webkit-scrollbar{display:none}
+.filter-chip{flex-shrink:0;border:1px solid var(--border);border-radius:20px;padding:0.375rem 1rem;font-size:13px;font-weight:500;color:var(--slate);background:var(--white);cursor:pointer;transition:all 0.15s}
+.filter-chip:hover,.filter-chip.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+/* MAIN LAYOUT */
+.blog-body{max-width:1140px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start}
+@media(max-width:860px){.blog-body{grid-template-columns:1fr}.blog-sidebar{display:none}}
+
+/* POST GRID */
+.posts-section h2{font-size:15px;font-weight:600;color:var(--slate);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.06em}
+.post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem}
+.post-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;display:flex;flex-direction:column}
+.post-card:hover{border-color:var(--teal);box-shadow:0 4px 20px rgba(66,178,169,0.12)}
+.post-card-img{height:160px;background:linear-gradient(135deg,var(--navy) 0%,#0d4a8c 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.post-card-img .market-tag{position:absolute;top:12px;left:12px;background:rgba(255,255,255,0.15);color:var(--white);font-size:11px;font-weight:600;padding:3px 8px;border-radius:12px;backdrop-filter:blur(4px)}
+.post-card-img .icon-bg{width:56px;height:56px;border-radius:50%;background:rgba(66,178,169,0.2);display:flex;align-items:center;justify-content:center;font-size:24px}
+.post-card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column}
+.post-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--teal);margin-bottom:0.5rem}
+.post-card-body h3{font-size:15px;font-weight:600;color:var(--navy);line-height:1.4;margin-bottom:0.625rem;flex:1}
+.post-card-body p{font-size:13px;color:var(--slate);line-height:1.5;margin-bottom:1rem}
+.post-card-footer{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--slate);border-top:1px solid var(--border);padding-top:0.875rem;margin-top:auto}
+.post-card-footer .read-link{color:var(--teal);font-weight:600;font-size:12px;display:flex;align-items:center;gap:4px}
+.post-card-footer .read-link:hover{color:var(--teal-hover)}
+
+/* FEATURED POST */
+.featured-post{background:var(--navy);border-radius:12px;overflow:hidden;margin-bottom:2rem;display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:640px){.featured-post{grid-template-columns:1fr}}
+.featured-post-visual{background:linear-gradient(135deg,#0d4a8c,var(--teal));min-height:200px;display:flex;align-items:center;justify-content:center;font-size:48px}
+.featured-post-body{padding:2rem}
+.featured-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--teal);margin-bottom:0.75rem}
+.featured-post-body h2{font-size:1.375rem;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:0.75rem}
+.featured-post-body p{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:1.25rem}
+.btn-teal{display:inline-block;background:var(--teal);color:var(--white);padding:0.5625rem 1.25rem;border-radius:6px;font-size:13px;font-weight:600;transition:background 0.15s}
+.btn-teal:hover{background:var(--teal-hover)}
+.featured-meta{font-size:12px;color:rgba(255,255,255,0.45);margin-top:0.75rem}
+
+/* SIDEBAR */
+.blog-sidebar{display:flex;flex-direction:column;gap:1.5rem}
+.sidebar-card{background:var(--grey);border-radius:10px;padding:1.25rem}
+.sidebar-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--slate);margin-bottom:1rem}
+.sidebar-card ul{list-style:none;display:flex;flex-direction:column;gap:0.625rem}
+.sidebar-card li a{font-size:13px;color:var(--navy);font-weight:500;display:flex;gap:0.5rem;align-items:flex-start;line-height:1.4}
+.sidebar-card li a::before{content:'→';color:var(--teal);flex-shrink:0;font-size:12px;margin-top:1px}
+.sidebar-card li a:hover{color:var(--teal)}
+.cat-list{display:flex;flex-wrap:wrap;gap:6px}
+.cat-tag{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--slate);cursor:pointer;background:var(--white);transition:all 0.15s}
+.cat-tag:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.cta-sidebar{background:var(--navy);border-radius:10px;padding:1.25rem;text-align:center}
+.cta-sidebar p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;margin-bottom:1rem}
+.cta-sidebar h3{font-size:14px;font-weight:600;color:var(--white);margin-bottom:0.5rem}
+
+/* PAGINATION */
+.pagination{display:flex;gap:8px;justify-content:center;margin-top:2rem}
+.page-btn{width:36px;height:36px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--slate);cursor:pointer;background:var(--white);transition:all 0.15s}
+.page-btn.active,.page-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+/* CTA BANNER */
+.cta-banner{background:var(--aqua);border-top:1px solid rgba(66,178,169,0.2);padding:3rem 1.5rem;text-align:center}
+.cta-banner-inner{max-width:560px;margin:0 auto}
+.cta-banner h2{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem}
+.cta-banner p{font-size:15px;color:var(--slate);margin-bottom:1.5rem}
+.btn-navy{display:inline-block;background:var(--navy);color:var(--white);padding:0.75rem 1.75rem;border-radius:6px;font-size:14px;font-weight:600;transition:background 0.15s;margin:0 0.375rem 0.5rem}
+.btn-navy:hover{background:#0a3f78}
+
+/* FOOTER */
+footer{background:var(--navy);color:rgba(255,255,255,0.7);padding:3rem 1.5rem 2rem}
+.footer-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+@media(max-width:700px){.footer-inner{grid-template-columns:1fr 1fr}}
+.footer-brand img{height:32px;margin-bottom:0.875rem;filter:brightness(0) invert(1)}
+.footer-brand p{font-size:13px;line-height:1.6;margin-bottom:0.5rem}
+.footer-brand .tagline{font-size:12px;color:var(--teal);font-weight:600}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:0.875rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.65);transition:color 0.15s}
+.footer-col a:hover{color:var(--teal)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;font-size:12px;color:rgba(255,255,255,0.35)}
+.footer-bottom a{color:rgba(255,255,255,0.35)}
+.footer-bottom a:hover{color:var(--teal)}
+.footer-links{display:flex;gap:1.25rem}
+
+/* NO-JS search */
+.search-wrap{display:flex;gap:8px;margin-bottom:1.25rem}
+.search-wrap input{flex:1;border:1px solid var(--border);border-radius:6px;padding:0.5rem 0.875rem;font-size:14px;color:var(--text);outline:none}
+.search-wrap input:focus{border-color:var(--teal)}
+.search-wrap button{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:0.5rem 1rem;font-size:13px;cursor:pointer;font-weight:600}
+
+/* EMPTY */
+.no-posts{text-align:center;padding:3rem;color:var(--slate);font-size:15px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://www.medbridge-global.com/index.html" aria-label="Medbridge home">
+      <img src="https://www.medbridge-global.com/images/medbridge-logo.png" alt="Medbridge" height="36">
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="https://www.medbridge-global.com/index.html">Home</a></li>
+      <li><a href="https://www.medbridge-global.com/pages/about.html">About</a></li>
+      <li>
+        <a href="https://www.medbridge-global.com/pages/markets.html">Markets ▾</a>
+        <div class="dropdown-menu">
+          <a href="https://www.medbridge-global.com/pages/hong-kong.html">🇭🇰 Hong Kong</a>
+          <a href="https://www.medbridge-global.com/pages/singapore.html">🇸🇬 Singapore</a>
+          <a href="https://www.medbridge-global.com/pages/malaysia.html">🇲🇾 Malaysia</a>
+          <a href="https://www.medbridge-global.com/pages/thailand.html">🇹🇭 Thailand</a>
+        </div>
+      </li>
+      <li>
+        <a href="https://www.medbridge-global.com/pages/services.html">Services ▾</a>
+        <div class="dropdown-menu">
+          <a href="https://www.medbridge-global.com/pages/services.html#regulatory">Regulatory Market Entry</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#representation">In-Market Representation</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#licence">Licence Holding</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#ior">Importer of Record</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#3pl">Healthcare 3PL</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#lastmile">Last-Mile Logistics</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#commercial">Commercial Market Access</a>
+        </div>
+      </li>
+      <li><a href="https://www.medbridge-global.com/pages/specialities.html">Specialities</a></li>
+      <li><a href="https://www.medbridge-global.com/pages/resources/index.html">Resources</a></li>
+      <li><a href="https://www.medbridge-global.com/pages/contact.html" class="nav-cta">Request Assessment</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="https://www.medbridge-global.com/index.html">Home</a>
+    <span>/</span>
+    <strong>Blog</strong>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="blog-hero">
+  <div class="eyebrow">Medbridge Insights</div>
+  <h1>Healthcare Market Access Blog</h1>
+  <p>Practical guidance on medical device registration, importation and logistics across Hong Kong, Singapore, Malaysia and Thailand.</p>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" role="navigation" aria-label="Category filter">
+  <div class="filter-bar-inner" id="filter-bar">
+    <button class="filter-chip active" onclick="filterPosts('all',this)">All Posts</button>
+    <button class="filter-chip" onclick="filterPosts('Regulatory',this)">Regulatory</button>
+    <button class="filter-chip" onclick="filterPosts('Market Entry',this)">Market Entry</button>
+    <button class="filter-chip" onclick="filterPosts('Logistics',this)">Logistics</button>
+    <button class="filter-chip" onclick="filterPosts('Hong Kong',this)">Hong Kong</button>
+    <button class="filter-chip" onclick="filterPosts('Singapore',this)">Singapore</button>
+    <button class="filter-chip" onclick="filterPosts('Malaysia',this)">Malaysia</button>
+    <button class="filter-chip" onclick="filterPosts('Thailand',this)">Thailand</button>
+    <button class="filter-chip" onclick="filterPosts('Compliance',this)">Compliance</button>
+  </div>
+</div>
+
+<!-- BODY -->
+<main class="blog-body">
+  <div class="posts-section">
+
+    <!-- FEATURED -->
+    <div id="featured-post"></div>
+
+    <!-- SEARCH -->
+    <div class="search-wrap">
+      <input type="search" id="search-input" placeholder="Search posts…" aria-label="Search blog posts" oninput="filterPosts(currentFilter,null)">
+      <button onclick="filterPosts(currentFilter,null)">Search</button>
+    </div>
+
+    <h2 id="section-title">Latest Posts</h2>
+    <div class="post-grid" id="post-grid" aria-live="polite"></div>
+    <div class="no-posts" id="no-posts" style="display:none">No posts match your search.</div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="blog-sidebar">
+    <div class="sidebar-card">
+      <h3>Categories</h3>
+      <div class="cat-list">
+        <span class="cat-tag" onclick="filterChip('all')">All</span>
+        <span class="cat-tag" onclick="filterChip('Regulatory')">Regulatory</span>
+        <span class="cat-tag" onclick="filterChip('Market Entry')">Market Entry</span>
+        <span class="cat-tag" onclick="filterChip('Logistics')">Logistics</span>
+        <span class="cat-tag" onclick="filterChip('Hong Kong')">Hong Kong</span>
+        <span class="cat-tag" onclick="filterChip('Singapore')">Singapore</span>
+        <span class="cat-tag" onclick="filterChip('Malaysia')">Malaysia</span>
+        <span class="cat-tag" onclick="filterChip('Thailand')">Thailand</span>
+        <span class="cat-tag" onclick="filterChip('Compliance')">Compliance</span>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <h3>Guides &amp; Resources</h3>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/resources/hsa-medical-device-registration-singapore.html">HSA Singapore Registration Guide</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/resources/mda-medical-device-registration-malaysia.html">MDA Malaysia Registration Guide</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/resources/importer-of-record-healthcare-asia.html">Importer of Record in Asia</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/resources/medical-device-licence-holding-asia.html">Licence Holding in Asia</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/resources/index.html">View All Resources</a></li>
+      </ul>
+    </div>
+    <div class="cta-sidebar">
+      <h3>Ready to Enter Asian Markets?</h3>
+      <p>Get a practical market-entry assessment from our regional team — covering regulatory, importation and logistics.</p>
+      <a href="https://www.medbridge-global.com/pages/contact.html" class="btn-teal" style="display:block;margin-top:0">Request Assessment</a>
+    </div>
+  </aside>
+</main>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="cta-banner-inner">
+    <h2>Plan Your Asian Market Entry</h2>
+    <p>Medbridge coordinates regulatory registration, importation, licence holding and healthcare logistics across four Asian markets through one regional structure.</p>
+    <a href="https://www.medbridge-global.com/pages/contact.html" class="btn-navy">Request a Market-Entry Assessment</a>
+    <a href="https://www.medbridge-global.com/pages/services.html" class="btn-navy" style="background:transparent;border:1px solid var(--navy);color:var(--navy)">Explore Services</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://www.medbridge-global.com/images/medbridge-logo.png" alt="Medbridge">
+      <p>Medbridge is headquartered in Hong Kong and supports clients through local entities, representatives and approved service partners across its supported markets.</p>
+      <div class="tagline">Market Access. Made Simple.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Markets</h4>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/hong-kong.html">Hong Kong (HQ)</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/singapore.html">Singapore</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/malaysia.html">Malaysia</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/thailand.html">Thailand</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#regulatory">Regulatory Market Entry</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#ior">Importer of Record</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#3pl">Healthcare 3PL</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#lastmile">Last-Mile Logistics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/about.html">About Medbridge</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/specialities.html">Specialities</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/resources/index.html">Resources</a></li>
+        <li><a href="/pages/blog/index.html">Blog</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Medbridge. All rights reserved. Headquartered in Hong Kong.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Regulatory Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── DATA STORE ── */
+const POSTS = [
+  {
+    id: 1,
+    slug: 'medical-device-classification-hong-kong',
+    title: 'Understanding Medical Device Classification in Hong Kong',
+    excerpt: 'An overview of how medical devices are classified under the Hong Kong Medical Device Ordinance and what manufacturers need to know before applying for listing.',
+    category: 'Hong Kong',
+    tags: ['Hong Kong', 'Classification', 'MDD'],
+    author: 'Medbridge Editorial',
+    date: '2026-05-12',
+    icon: '🏥',
+    featured: false
+  },
+  {
+    id: 2,
+    slug: 'hsa-registration-singapore-foreign-manufacturers',
+    title: 'HSA Registration: What Singapore Requires from Foreign Manufacturers',
+    excerpt: 'Key requirements from the Health Sciences Authority for medical device product registrations in Singapore, including the ASEAN CSDT format and local product owner obligations.',
+    category: 'Singapore',
+    tags: ['Singapore', 'HSA', 'Registration'],
+    author: 'Medbridge Editorial',
+    date: '2026-05-28',
+    icon: '🇸🇬',
+    featured: true
+  },
+  {
+    id: 3,
+    slug: 'importer-of-record-explained',
+    title: 'Importer of Record Services Explained for Medical Device Manufacturers',
+    excerpt: 'What does an Importer of Record actually do, and why does it matter for medical device market access in Asia? A practical guide for manufacturers.',
+    category: 'Logistics',
+    tags: ['IOR', 'Importation', 'Logistics'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-02',
+    icon: '📦',
+    featured: false
+  },
+  {
+    id: 4,
+    slug: 'licence-holding-distributor-transitions',
+    title: 'How Licence Holding Protects You During Distributor Transitions',
+    excerpt: 'Changing distributors in Asia without losing your product registrations is possible — but only if you have the right registration structure in place from the start.',
+    category: 'Regulatory',
+    tags: ['Licence Holding', 'Distributor', 'Strategy'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-10',
+    icon: '🔒',
+    featured: false
+  },
+  {
+    id: 5,
+    slug: 'mda-registration-malaysia-guide',
+    title: 'MDA Medical Device Registration in Malaysia: Key Steps and Timelines',
+    excerpt: 'A practical guide to registering medical devices with Malaysia\'s Medical Device Authority — covering establishment licensing, device classification and registration timelines.',
+    category: 'Malaysia',
+    tags: ['Malaysia', 'MDA', 'Registration'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-14',
+    icon: '🇲🇾',
+    featured: false
+  },
+  {
+    id: 6,
+    slug: 'healthcare-3pl-asia-guide',
+    title: 'Healthcare 3PL in Asia: What Medical Device Manufacturers Should Know',
+    excerpt: 'From lot tracking and expiry management to cold-chain considerations, here\'s what you need to understand about third-party logistics for medical devices in Asia.',
+    category: 'Logistics',
+    tags: ['3PL', 'Warehousing', 'Supply Chain'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-18',
+    icon: '🏭',
+    featured: false
+  }
+];
+
+const POSTS_PER_PAGE = 6;
+let currentFilter = 'all';
+let currentPage = 1;
+
+function formatDate(d) {
+  return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function getPostUrl(slug) {
+  return '/pages/blog/' + slug + '.html';
+}
+
+function renderFeatured() {
+  const fp = POSTS.find(p => p.featured);
+  const el = document.getElementById('featured-post');
+  if (!fp) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <div class="featured-post">
+      <div class="featured-post-visual">${fp.icon}</div>
+      <div class="featured-post-body">
+        <div class="featured-badge">✦ Featured Post</div>
+        <h2>${fp.title}</h2>
+        <p>${fp.excerpt}</p>
+        <a href="${getPostUrl(fp.slug)}" class="btn-teal">Read Article →</a>
+        <div class="featured-meta">${fp.category} · ${formatDate(fp.date)}</div>
+      </div>
+    </div>
+  `;
+}
+
+function filterPosts(cat, btn) {
+  if (cat !== null) currentFilter = cat;
+  currentPage = 1;
+  if (btn) {
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  renderGrid();
+}
+
+function filterChip(cat) {
+  currentFilter = cat;
+  currentPage = 1;
+  document.querySelectorAll('.filter-chip').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === (cat === 'all' ? 'All Posts' : cat));
+  });
+  renderGrid();
+}
+
+function renderGrid() {
+  const q = (document.getElementById('search-input').value || '').toLowerCase().trim();
+  let filtered = POSTS.filter(p => {
+    const matchCat = currentFilter === 'all' || p.category === currentFilter;
+    const matchQ = !q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
+    return matchCat && matchQ;
+  });
+
+  const total = filtered.length;
+  const pages = Math.ceil(total / POSTS_PER_PAGE);
+  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  const visible = filtered.slice(start, start + POSTS_PER_PAGE);
+
+  const grid = document.getElementById('post-grid');
+  const noP = document.getElementById('no-posts');
+  const title = document.getElementById('section-title');
+
+  if (!visible.length) {
+    grid.innerHTML = '';
+    noP.style.display = 'block';
+    title.textContent = 'No posts found';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  noP.style.display = 'none';
+  title.textContent = currentFilter === 'all' ? 'Latest Posts' : currentFilter;
+
+  grid.innerHTML = visible.map(p => `
+    <article class="post-card">
+      <div class="post-card-img">
+        <span class="market-tag">${p.category}</span>
+        <div class="icon-bg">${p.icon}</div>
+      </div>
+      <div class="post-card-body">
+        <div class="post-cat">${p.category}</div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <div class="post-card-footer">
+          <span>${formatDate(p.date)}</span>
+          <a href="${getPostUrl(p.slug)}" class="read-link">Read →</a>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  /* pagination */
+  const pg = document.getElementById('pagination');
+  if (pages <= 1) { pg.innerHTML = ''; return; }
+  let btns = '';
+  for (let i = 1; i <= pages; i++) {
+    btns += `<button class="page-btn${i===currentPage?' active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  pg.innerHTML = btns;
+}
+
+function goPage(n) {
+  currentPage = n;
+  renderGrid();
+  document.querySelector('.posts-section').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+renderFeatured();
+renderGrid();
+</script>
+</body>
+</html>

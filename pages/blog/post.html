@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Blog Post | Medbridge</title>
+<meta name="description" id="page-desc" content="">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.medbridge-global.com/images/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#062F5A;
+  --teal:#42B2A9;
+  --teal-hover:#35978F;
+  --slate:#68737D;
+  --aqua:#EAF7F5;
+  --grey:#F3F5F7;
+  --white:#FFFFFF;
+  --text:#1a2a3a;
+  --border:#e2e8f0;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;color:var(--text);background:var(--white);line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;height:64px;gap:2rem}
+.nav-logo img{height:36px;width:auto}
+.nav-links{display:flex;align-items:center;gap:0;list-style:none;flex:1}
+.nav-links li{position:relative}
+.nav-links a{display:block;padding:0.5rem 0.875rem;font-size:14px;color:var(--slate);font-weight:500;white-space:nowrap;transition:color 0.15s}
+.nav-links a:hover{color:var(--navy)}
+.nav-links .dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0;min-width:220px;box-shadow:0 8px 24px rgba(6,47,90,0.1);z-index:200}
+.nav-links li:hover .dropdown-menu{display:block}
+.dropdown-menu a{padding:0.5rem 1rem;font-size:14px;color:var(--slate);display:block}
+.dropdown-menu a:hover{color:var(--navy);background:var(--grey)}
+.nav-cta{margin-left:auto;background:var(--teal);color:var(--white)!important;padding:0.5rem 1.125rem!important;border-radius:6px;font-size:14px;font-weight:600;white-space:nowrap;transition:background 0.15s}
+.nav-cta:hover{background:var(--teal-hover)!important}
+
+.breadcrumb{background:var(--grey);border-bottom:1px solid var(--border)}
+.breadcrumb-inner{max-width:1140px;margin:0 auto;padding:0.625rem 1.5rem;font-size:13px;color:var(--slate);display:flex;gap:0.375rem;align-items:center;flex-wrap:wrap}
+.breadcrumb-inner a{color:var(--slate)}
+.breadcrumb-inner a:hover{color:var(--navy)}
+.breadcrumb-inner span{opacity:0.5}
+
+.post-hero{background:var(--navy);padding:3.5rem 1.5rem}
+.post-hero-inner{max-width:760px;margin:0 auto}
+.post-meta-top{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.cat-badge{font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;background:rgba(66,178,169,0.2);color:var(--teal)}
+.post-date{font-size:13px;color:rgba(255,255,255,0.45)}
+.post-hero h1{font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:700;color:var(--white);line-height:1.25;margin-bottom:1rem}
+.post-excerpt{font-size:1.0625rem;color:rgba(255,255,255,0.65);line-height:1.7;border-left:3px solid var(--teal);padding-left:1rem;margin-top:1.25rem}
+
+.post-layout{max-width:1140px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start}
+@media(max-width:860px){.post-layout{grid-template-columns:1fr}.post-sidebar{display:none}}
+
+.post-body{font-size:16px;line-height:1.8;color:var(--text)}
+.post-body h2{font-size:1.3125rem;font-weight:700;color:var(--navy);margin:2rem 0 0.75rem;padding-top:1rem;border-top:1px solid var(--border)}
+.post-body h2:first-of-type{border-top:none;margin-top:0}
+.post-body h3{font-size:1.0625rem;font-weight:700;color:var(--navy);margin:1.5rem 0 0.625rem}
+.post-body p{margin-bottom:1.125rem}
+.post-body ul,.post-body ol{margin:0.75rem 0 1.125rem 1.5rem}
+.post-body li{margin-bottom:0.375rem}
+.post-body strong{color:var(--navy)}
+.post-body blockquote{margin:1.5rem 0;padding:1rem 1.25rem;border-left:4px solid var(--teal);background:var(--aqua);border-radius:0 6px 6px 0;font-style:italic;color:var(--slate)}
+.post-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:14px}
+.post-body th{background:var(--navy);color:var(--white);padding:0.625rem 0.875rem;text-align:left;font-weight:600;font-size:13px}
+.post-body td{padding:0.625rem 0.875rem;border-bottom:1px solid var(--border)}
+.post-body tr:nth-child(even) td{background:var(--grey)}
+.post-body .callout{background:var(--aqua);border:1px solid rgba(66,178,169,0.3);border-radius:8px;padding:1.125rem 1.25rem;margin:1.5rem 0;font-size:15px}
+.post-body .callout strong{color:var(--teal)}
+.post-body hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+
+.author-box{display:flex;align-items:center;gap:1rem;background:var(--grey);border-radius:10px;padding:1.25rem;margin:2.5rem 0}
+.author-avatar{width:48px;height:48px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:18px;font-weight:700;flex-shrink:0}
+.author-info .name{font-weight:600;font-size:14px;color:var(--navy)}
+.author-info .role{font-size:13px;color:var(--slate)}
+
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin:1.5rem 0}
+.tag{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--slate);background:var(--white)}
+
+.related-posts{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.related-posts h3{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate);margin-bottom:1.25rem}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.related-card{border:1px solid var(--border);border-radius:8px;padding:1rem;transition:border-color 0.15s}
+.related-card:hover{border-color:var(--teal)}
+.related-card .r-cat{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--teal);margin-bottom:0.375rem}
+.related-card h4{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4;margin-bottom:0.5rem}
+.related-card .r-link{font-size:12px;color:var(--teal);font-weight:600}
+
+.post-sidebar{display:flex;flex-direction:column;gap:1.5rem}
+.sidebar-card{background:var(--grey);border-radius:10px;padding:1.25rem}
+.sidebar-card h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:1rem}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.toc-list li a{font-size:13px;color:var(--navy);display:flex;gap:0.5rem;align-items:flex-start;line-height:1.4;padding:0.25rem 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+.toc-list li a::before{content:'#';color:var(--teal);flex-shrink:0;font-size:11px;margin-top:2px;font-weight:700}
+.toc-list li a:hover{color:var(--teal)}
+.sidebar-card ul{list-style:none;display:flex;flex-direction:column;gap:0.625rem}
+.sidebar-card li a{font-size:13px;color:var(--navy);display:flex;gap:0.5rem;align-items:flex-start;line-height:1.4}
+.sidebar-card li a::before{content:'→';color:var(--teal);flex-shrink:0;font-size:12px;margin-top:1px}
+.sidebar-card li a:hover{color:var(--teal)}
+.cta-sidebar{background:var(--navy);border-radius:10px;padding:1.25rem;text-align:center}
+.cta-sidebar h3{font-size:14px;font-weight:600;color:var(--white);margin-bottom:0.5rem}
+.cta-sidebar p{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;margin-bottom:1rem}
+.btn-teal{display:inline-block;background:var(--teal);color:var(--white);padding:0.5625rem 1.25rem;border-radius:6px;font-size:13px;font-weight:600;transition:background 0.15s}
+.btn-teal:hover{background:var(--teal-hover)}
+
+.cta-banner{background:var(--aqua);border-top:1px solid rgba(66,178,169,0.2);padding:3rem 1.5rem;text-align:center}
+.cta-banner-inner{max-width:560px;margin:0 auto}
+.cta-banner h2{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem}
+.cta-banner p{font-size:15px;color:var(--slate);margin-bottom:1.5rem}
+.btn-navy{display:inline-block;background:var(--navy);color:var(--white);padding:0.75rem 1.75rem;border-radius:6px;font-size:14px;font-weight:600;transition:background 0.15s;margin:0 0.375rem 0.5rem}
+.btn-navy:hover{background:#0a3f78}
+
+footer{background:var(--navy);color:rgba(255,255,255,0.7);padding:3rem 1.5rem 2rem}
+.footer-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+@media(max-width:700px){.footer-inner{grid-template-columns:1fr 1fr}}
+.footer-brand img{height:32px;margin-bottom:0.875rem;filter:brightness(0) invert(1)}
+.footer-brand p{font-size:13px;line-height:1.6;margin-bottom:0.5rem}
+.footer-brand .tagline{font-size:12px;color:var(--teal);font-weight:600}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:0.875rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.65);transition:color 0.15s}
+.footer-col a:hover{color:var(--teal)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;font-size:12px;color:rgba(255,255,255,0.35)}
+.footer-bottom a{color:rgba(255,255,255,0.35)}
+.footer-bottom a:hover{color:var(--teal)}
+.footer-links{display:flex;gap:1.25rem}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--slate);margin-bottom:2rem;transition:color 0.15s}
+.back-link:hover{color:var(--navy)}
+.share-row{display:flex;align-items:center;gap:10px;margin:2rem 0;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-row span{font-size:13px;font-weight:600;color:var(--slate)}
+.share-btn{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);color:var(--slate);cursor:pointer;background:var(--white);transition:all 0.15s}
+.share-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+.not-found{text-align:center;padding:5rem 1.5rem;color:var(--slate)}
+.not-found h2{font-size:1.5rem;color:var(--navy);margin-bottom:0.75rem}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://www.medbridge-global.com/index.html" aria-label="Medbridge home">
+      <img src="https://www.medbridge-global.com/images/medbridge-logo.png" alt="Medbridge" height="36">
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="https://www.medbridge-global.com/index.html">Home</a></li>
+      <li><a href="https://www.medbridge-global.com/pages/about.html">About</a></li>
+      <li>
+        <a href="https://www.medbridge-global.com/pages/markets.html">Markets ▾</a>
+        <div class="dropdown-menu">
+          <a href="https://www.medbridge-global.com/pages/hong-kong.html">🇭🇰 Hong Kong</a>
+          <a href="https://www.medbridge-global.com/pages/singapore.html">🇸🇬 Singapore</a>
+          <a href="https://www.medbridge-global.com/pages/malaysia.html">🇲🇾 Malaysia</a>
+          <a href="https://www.medbridge-global.com/pages/thailand.html">🇹🇭 Thailand</a>
+        </div>
+      </li>
+      <li>
+        <a href="https://www.medbridge-global.com/pages/services.html">Services ▾</a>
+        <div class="dropdown-menu">
+          <a href="https://www.medbridge-global.com/pages/services.html#regulatory">Regulatory Market Entry</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#representation">In-Market Representation</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#licence">Licence Holding</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#ior">Importer of Record</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#3pl">Healthcare 3PL</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#lastmile">Last-Mile Logistics</a>
+          <a href="https://www.medbridge-global.com/pages/services.html#commercial">Commercial Market Access</a>
+        </div>
+      </li>
+      <li><a href="https://www.medbridge-global.com/pages/specialities.html">Specialities</a></li>
+      <li><a href="https://www.medbridge-global.com/pages/resources/index.html">Resources</a></li>
+      <li><a href="https://www.medbridge-global.com/pages/contact.html" class="nav-cta">Request Assessment</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="breadcrumb-area"></div>
+<div id="hero-area"></div>
+
+<div id="post-area"></div>
+
+<section class="cta-banner">
+  <div class="cta-banner-inner">
+    <h2>Plan Your Asian Market Entry</h2>
+    <p>Medbridge coordinates regulatory registration, importation, licence holding and healthcare logistics across four Asian markets through one regional structure.</p>
+    <a href="https://www.medbridge-global.com/pages/contact.html" class="btn-navy">Request a Market-Entry Assessment</a>
+    <a href="https://www.medbridge-global.com/pages/services.html" class="btn-navy" style="background:transparent;border:1px solid var(--navy);color:var(--navy)">Explore Services</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://www.medbridge-global.com/images/medbridge-logo.png" alt="Medbridge">
+      <p>Medbridge is headquartered in Hong Kong and supports clients through local entities, representatives and approved service partners across its supported markets.</p>
+      <div class="tagline">Market Access. Made Simple.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Markets</h4>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/hong-kong.html">Hong Kong (HQ)</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/singapore.html">Singapore</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/malaysia.html">Malaysia</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/thailand.html">Thailand</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#regulatory">Regulatory Market Entry</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#ior">Importer of Record</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#3pl">Healthcare 3PL</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/services.html#lastmile">Last-Mile Logistics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="https://www.medbridge-global.com/pages/about.html">About Medbridge</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/specialities.html">Specialities</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/resources/index.html">Resources</a></li>
+        <li><a href="/pages/blog/index.html">Blog</a></li>
+        <li><a href="https://www.medbridge-global.com/pages/contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Medbridge. All rights reserved. Headquartered in Hong Kong.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Regulatory Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── POST DATA (same store as index — in production, replace with API/CMS fetch) ── */
+const POSTS = [
+  {
+    slug: 'medical-device-classification-hong-kong',
+    title: 'Understanding Medical Device Classification in Hong Kong',
+    excerpt: 'An overview of how medical devices are classified under the Hong Kong Medical Device Ordinance and what manufacturers need to know before applying for listing.',
+    category: 'Hong Kong',
+    tags: ['Hong Kong', 'Classification', 'MDD'],
+    author: 'Medbridge Editorial',
+    date: '2026-05-12',
+    readTime: '6 min read',
+    content: `
+      <h2>Regulatory Framework</h2>
+      <p>Hong Kong regulates medical devices under the Medical Device Ordinance (Cap. 630), which came into full operation in 2016. The ordinance establishes the Medical Device Control Office (MDCO) within the Department of Health as the competent authority responsible for the listing and post-market surveillance of medical devices placed on the Hong Kong market.</p>
+      <p>Unlike some other Asian markets, Hong Kong operates a product-listing rather than a pre-market approval model for most device classes. However, manufacturers must ensure their products meet the applicable essential principles of safety and performance before submitting an application.</p>
+      <h2>Device Classification</h2>
+      <p>Medical devices in Hong Kong are classified into four risk categories:</p>
+      <table>
+        <thead><tr><th>Class</th><th>Risk Level</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Class I</td><td>Low risk</td><td>Bandages, examination gloves, tongue depressors</td></tr>
+          <tr><td>Class II</td><td>Low-medium risk</td><td>Hypodermic needles, ultrasound equipment, contact lenses</td></tr>
+          <tr><td>Class III</td><td>Medium-high risk</td><td>Haemodialysis machines, bone fixation plates, ventilators</td></tr>
+          <tr><td>Class IV</td><td>High risk</td><td>Cardiac pacemakers, coronary stents, implantable defibrillators</td></tr>
+        </tbody>
+      </table>
+      <p>Classification is based on the intended use, the body contact, the duration of use, whether the device is active, and whether it delivers energy or medicinal substances.</p>
+      <h2>The Local Responsible Person</h2>
+      <p>Foreign manufacturers placing devices on the Hong Kong market must appoint a <strong>Local Responsible Person (LRP)</strong>. The LRP must be incorporated in Hong Kong, hold the relevant licences, and take legal responsibility for the accuracy of the registration application and the post-market obligations associated with the device.</p>
+      <blockquote>The LRP role is distinct from a commercial distributor. Manufacturers should consider whether their LRP and commercial distribution arrangements are appropriately structured from the outset — especially if they anticipate changing distribution partners in future.</blockquote>
+      <h2>The Listing Process</h2>
+      <p>Applications for device listing are submitted to the MDCO through the Medical Device Administrative Control System (MDACS). The key documentation requirements include:</p>
+      <ul>
+        <li>Device description and intended use statement</li>
+        <li>Classification justification</li>
+        <li>Essential principles checklist with supporting evidence</li>
+        <li>Conformity assessment documentation (CE, FDA, TGA or equivalent)</li>
+        <li>Labelling (English and Chinese)</li>
+        <li>Post-market surveillance plan</li>
+        <li>Manufacturer quality management system evidence (ISO 13485 or equivalent)</li>
+      </ul>
+      <h2>Timelines and Fees</h2>
+      <p>Processing timelines vary by class. Class I and II devices typically take three to six months under standard review. Class III and IV devices may take six to twelve months. The MDCO may request additional information during the review period, which can extend timelines accordingly.</p>
+      <div class="callout"><strong>Important:</strong> Approval timelines are controlled by the MDCO and cannot be guaranteed. Medbridge does not represent fixed timelines as commitments.</div>
+      <h2>Post-Market Obligations</h2>
+      <p>Listing holders are required to maintain vigilance records, report serious incidents to the MDCO, and manage any field safety corrective actions or product recalls through the LRP. Annual reporting and renewal obligations apply depending on device class.</p>
+      <hr>
+      <p>Understanding classification correctly at the outset avoids costly regulatory rework and delays. If you are uncertain about the classification of your device under the Hong Kong framework, Medbridge can provide a regulatory pathway assessment before you commit to the submission process.</p>
+    `
+  },
+  {
+    slug: 'hsa-registration-singapore-foreign-manufacturers',
+    title: 'HSA Registration: What Singapore Requires from Foreign Manufacturers',
+    excerpt: 'Key requirements from the Health Sciences Authority for medical device product registrations in Singapore, including the ASEAN CSDT format and local product owner obligations.',
+    category: 'Singapore',
+    tags: ['Singapore', 'HSA', 'Registration'],
+    author: 'Medbridge Editorial',
+    date: '2026-05-28',
+    readTime: '8 min read',
+    content: `
+      <h2>Regulatory Framework</h2>
+      <p>Singapore's Health Sciences Authority (HSA) regulates medical devices under the Health Products Act (HPA). The HSA's Medical Devices Branch administers product registration, dealer licensing, product vigilance and post-market safety surveillance. Singapore's framework is one of the most developed in Southeast Asia and is internationally recognised.</p>
+      <h2>Classification System</h2>
+      <p>Singapore uses a four-class risk-based classification aligned with ASEAN AMDD guidelines:</p>
+      <table>
+        <thead><tr><th>Class</th><th>Risk</th><th>Application Pathway</th></tr></thead>
+        <tbody>
+          <tr><td>Class A</td><td>Low risk</td><td>Product Registration (Listing)</td></tr>
+          <tr><td>Class B</td><td>Low-medium risk</td><td>Abridged or Full</td></tr>
+          <tr><td>Class C</td><td>Medium-high risk</td><td>Abridged or Full</td></tr>
+          <tr><td>Class D</td><td>High risk</td><td>Full or Verification</td></tr>
+        </tbody>
+      </table>
+      <h2>Local Product Owner Requirement</h2>
+      <p>Foreign manufacturers must appoint a Singapore-registered company as the <strong>Local Product Owner (LPO)</strong>. The LPO holds the product registration in its own name and is legally responsible for post-market obligations, including vigilance reporting and recall coordination.</p>
+      <blockquote>The LPO does not have to be the commercial distributor. Separating the LPO and distribution functions gives manufacturers greater flexibility to change commercial partners without affecting the product registration — an important consideration when planning long-term market access in Singapore.</blockquote>
+      <h2>ASEAN Common Submission Dossier Template</h2>
+      <p>HSA accepts submissions in the ASEAN Common Submission Dossier Template (CSDT) format. Technical documentation requirements vary by device class. Key documents typically include:</p>
+      <ul>
+        <li>Device description and specifications</li>
+        <li>Classification justification</li>
+        <li>Clinical and performance evidence</li>
+        <li>Risk management documentation (ISO 14971)</li>
+        <li>Quality management system certification (ISO 13485)</li>
+        <li>Marketing authorisations from reference jurisdictions where applicable</li>
+        <li>Post-market surveillance plan</li>
+      </ul>
+      <h2>Registration Timelines</h2>
+      <p>HSA target review timelines are generally three to nine months depending on the device class and application pathway. Submissions using recognised foreign regulatory approvals (US FDA, CE, TGA) may qualify for the Abridged or Verification pathway, which can significantly reduce assessment time for higher-risk devices.</p>
+      <div class="callout"><strong>Note:</strong> HSA timelines are indicative and can be affected by submission quality and additional information requests. Medbridge does not guarantee approval timelines.</div>
+      <h2>Post-Market Obligations</h2>
+      <p>Registered product owners must maintain a post-market surveillance system, report adverse events and field safety corrective actions to HSA within the required notification windows, and manage product recalls in accordance with HSA's recall procedures.</p>
+    `
+  },
+  {
+    slug: 'importer-of-record-explained',
+    title: 'Importer of Record Services Explained for Medical Device Manufacturers',
+    excerpt: 'What does an Importer of Record actually do, and why does it matter for medical device market access in Asia? A practical guide for manufacturers.',
+    category: 'Logistics',
+    tags: ['IOR', 'Importation', 'Logistics'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-02',
+    readTime: '5 min read',
+    content: `
+      <h2>What is an Importer of Record?</h2>
+      <p>An Importer of Record (IOR) is a legal entity appointed to take responsibility for the importation of goods into a particular country. In the context of medical devices, the IOR holds the compliance obligation for the shipment at the point of customs clearance — including import permits, customs declarations, duties and tax payments, and product traceability from the port of entry.</p>
+      <h2>Why Does It Matter for Medical Device Manufacturers?</h2>
+      <p>Most markets in Asia require that imported medical devices be consigned to a locally licensed entity. Without a local IOR, shipments cannot clear customs. Many manufacturers assume their commercial distributor acts as the IOR, but this is not always the case — and conflating these roles creates risk.</p>
+      <blockquote>When a manufacturer relies on a distributor to act as both IOR and commercial partner, changing that distributor can disrupt importation continuity. Separating these functions from the outset gives manufacturers much greater control.</blockquote>
+      <h2>What an IOR Does</h2>
+      <ul>
+        <li>Acts as the named importer on customs documentation</li>
+        <li>Obtains and maintains any required import permits or licences</li>
+        <li>Prepares and submits customs declarations</li>
+        <li>Pays applicable import duties and taxes on behalf of or for the account of the manufacturer</li>
+        <li>Maintains import records for regulatory and audit purposes</li>
+        <li>Coordinates shipment receipt, inspection and release at the warehouse</li>
+        <li>Manages discrepancy reporting and exception handling</li>
+      </ul>
+      <h2>IOR Across Asia's Four Key Markets</h2>
+      <table>
+        <thead><tr><th>Market</th><th>Key IOR Requirement</th></tr></thead>
+        <tbody>
+          <tr><td>Hong Kong</td><td>No specific IOR licence required for most devices; LRP may coordinate importation</td></tr>
+          <tr><td>Singapore</td><td>HSA dealer licence required for import and wholesale of medical devices</td></tr>
+          <tr><td>Malaysia</td><td>Establishment licence from MDA required for import activities</td></tr>
+          <tr><td>Thailand</td><td>Import licence from Thai FDA required; appointment of local agent typically required</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Important:</strong> IOR requirements vary by product type and classification. Medbridge can advise on the specific requirements applicable to your device before market entry planning is finalised.</div>
+      <h2>IOR vs Distribution: Key Differences</h2>
+      <p>The IOR function is a regulatory and operational role. It is not a commercial or sales function. A distributor may also act as the IOR, but these roles carry different obligations, liabilities and legal standing. Manufacturers who wish to retain control over their regulatory and supply-chain infrastructure — even when working with third-party commercial distributors — should consider appointing an IOR that is independent of their sales channel.</p>
+    `
+  },
+  {
+    slug: 'licence-holding-distributor-transitions',
+    title: 'How Licence Holding Protects You During Distributor Transitions',
+    excerpt: 'Changing distributors in Asia without losing your product registrations is possible — but only if you have the right registration structure in place from the start.',
+    category: 'Regulatory',
+    tags: ['Licence Holding', 'Distributor', 'Strategy'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-10',
+    readTime: '7 min read',
+    content: `
+      <h2>The Problem with Distributor-Held Registrations</h2>
+      <p>Across Hong Kong, Singapore, Malaysia and Thailand, medical device product registrations and licences are typically held in the name of a local entity — not the foreign manufacturer. In many cases, that local entity is the commercial distributor. This arrangement creates a structural risk that manufacturers often only discover when they need to change their commercial partner.</p>
+      <p>When a registration is held by a distributor, the manufacturer cannot simply appoint a new partner and continue supplying. The registration must either be transferred — a process that can take months and is subject to regulatory approval — or re-submitted from scratch. In the interim, product supply may be disrupted and revenue can be lost.</p>
+      <h2>What is Licence Holding?</h2>
+      <p><strong>Licence holding</strong> means appointing an entity that holds the product registration and any associated licences independently of your commercial distribution arrangements. Where local regulations permit, this entity is separate from your distributors and acts solely in the capacity of a regulatory holder on behalf of the manufacturer.</p>
+      <blockquote>A licence holder that is independent of your distribution network gives you the freedom to change commercial partners without triggering a registration transfer — protecting supply continuity and reducing negotiating pressure during distributor transitions.</blockquote>
+      <h2>Market-Specific Considerations</h2>
+      <table>
+        <thead><tr><th>Market</th><th>Independent Licence Holding</th></tr></thead>
+        <tbody>
+          <tr><td>Hong Kong</td><td>Permitted under the Medical Device Ordinance where the LRP is a separate entity from the commercial importer/distributor</td></tr>
+          <tr><td>Singapore</td><td>Permitted — the Local Product Owner can be separate from the commercial dealer</td></tr>
+          <tr><td>Malaysia</td><td>The registered holder and commercial importer may be separate entities where the structure is correctly documented</td></tr>
+          <tr><td>Thailand</td><td>The local licence holder and commercial distributor may be separate; specific rules apply to product transfer and mandate requirements</td></tr>
+        </tbody>
+      </table>
+      <h2>What to Consider When Planning Your Registration Structure</h2>
+      <ul>
+        <li>Does your current registration structure allow you to change distributors without a registration transfer?</li>
+        <li>Who holds the product registration in each market, and is that entity independent of your commercial channel?</li>
+        <li>Does your distributor agreement give the distributor any rights over the registration that could be used as leverage?</li>
+        <li>Have you documented the regulatory responsibility matrix for each market?</li>
+        <li>Do you have an exit and transfer plan in place if your commercial relationship changes?</li>
+      </ul>
+      <div class="callout"><strong>Note:</strong> Licence holding structures must be established in accordance with local regulations. The feasibility and exact structure vary by market, product class and applicable rules. Medbridge advises on country-specific structures — we do not guarantee outcomes controlled by regulatory authorities.</div>
+      <h2>Planning for Future Flexibility</h2>
+      <p>The best time to put an independent licence-holding structure in place is before your products are registered — not after a distributor relationship has broken down. Restructuring registrations that are already held by a distributor is possible but takes time and involves regulatory process. Planning from the outset gives manufacturers the flexibility they need to manage their Asian market access on their own terms.</p>
+    `
+  },
+  {
+    slug: 'mda-registration-malaysia-guide',
+    title: 'MDA Medical Device Registration in Malaysia: Key Steps and Timelines',
+    excerpt: 'A practical guide to registering medical devices with Malaysia\'s Medical Device Authority — covering establishment licensing, device classification and registration timelines.',
+    category: 'Malaysia',
+    tags: ['Malaysia', 'MDA', 'Registration'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-14',
+    readTime: '7 min read',
+    content: `
+      <h2>Regulatory Framework</h2>
+      <p>Medical devices in Malaysia are regulated under the Medical Device Act 2012 (Act 737) and the Medical Device Regulations 2012, administered by the Medical Device Authority (MDA), a statutory body under the Ministry of Health Malaysia.</p>
+      <p>The MDA requires both manufacturers and the products themselves to be registered before a medical device can be placed on the Malaysian market. This dual registration — of the establishment and the device — is a distinctive feature of the Malaysian framework compared to some other markets in the region.</p>
+      <h2>Establishment Licensing</h2>
+      <p>Before submitting a product registration, foreign manufacturers and their Malaysian authorised representatives must obtain an Establishment Licence. The licence is granted to the local entity acting as the Authorised Representative or Importer and must be renewed annually.</p>
+      <h2>Device Classification</h2>
+      <table>
+        <thead><tr><th>Class</th><th>Risk</th><th>Review Pathway</th></tr></thead>
+        <tbody>
+          <tr><td>Class A</td><td>Lowest risk</td><td>Self-declaration / Listing</td></tr>
+          <tr><td>Class B</td><td>Low-medium risk</td><td>Conformity assessment</td></tr>
+          <tr><td>Class C</td><td>Medium-high risk</td><td>Full conformity assessment</td></tr>
+          <tr><td>Class D</td><td>Highest risk</td><td>Full assessment — MDA review required</td></tr>
+        </tbody>
+      </table>
+      <h2>Authorised Representative Requirements</h2>
+      <p>Foreign manufacturers must appoint a Malaysian-registered company as their <strong>Authorised Representative (AR)</strong>. The AR's name appears on the product registration and is responsible for post-market obligations in Malaysia. As with other markets, the AR does not have to be the commercial distributor — and separating these roles is strongly advisable for long-term market flexibility.</p>
+      <h2>Registration Timelines</h2>
+      <p>Class A and B devices are typically processed within three to six months of a complete submission. Class C and D devices may take six to twelve months. MDA may request additional information during the review, which can extend these timelines. Manufacturers should plan for authority-controlled delays when forecasting product launch dates.</p>
+      <div class="callout"><strong>Important:</strong> The MDA has moved to a fully electronic submission system. Documentation must meet specific format and translation requirements. Incomplete submissions are common causes of delay.</div>
+    `
+  },
+  {
+    slug: 'healthcare-3pl-asia-guide',
+    title: 'Healthcare 3PL in Asia: What Medical Device Manufacturers Should Know',
+    excerpt: 'From lot tracking and expiry management to cold-chain considerations, here\'s what you need to understand about third-party logistics for medical devices in Asia.',
+    category: 'Logistics',
+    tags: ['3PL', 'Warehousing', 'Supply Chain'],
+    author: 'Medbridge Editorial',
+    date: '2026-06-18',
+    readTime: '6 min read',
+    content: `
+      <h2>Why Healthcare 3PL is Different</h2>
+      <p>Third-party logistics (3PL) for medical devices is not the same as general commercial warehousing. Regulated healthcare products require specific storage conditions, traceability systems, segregation protocols and quality controls that standard logistics providers may not have in place.</p>
+      <p>Manufacturers placing products with a 3PL in Asia need to assess the facility and the service provider carefully — not just the commercial terms.</p>
+      <h2>Key Requirements for Medical Device Storage</h2>
+      <ul>
+        <li><strong>Temperature and humidity control:</strong> Many medical devices require controlled ambient storage; some require cold-chain conditions. Verify that the facility has validated temperature monitoring and documented excursion procedures.</li>
+        <li><strong>Lot and batch traceability:</strong> Full traceability from goods receipt to final delivery is a regulatory and recall-management requirement in all four markets Medbridge supports.</li>
+        <li><strong>Expiry date management:</strong> FEFO (First Expired, First Out) management must be actively enforced, not just nominally documented.</li>
+        <li><strong>Quarantine segregation:</strong> Products pending release inspection must be physically or systematically segregated from released stock.</li>
+        <li><strong>Returns and recall handling:</strong> The 3PL must have documented procedures for receiving returned goods, quarantining them, and coordinating recall activities with the manufacturer and competent authority.</li>
+      </ul>
+      <h2>Qualifying Your 3PL Partner</h2>
+      <p>Before appointing a 3PL, manufacturers should conduct a documented supplier qualification assessment. Key areas to review include:</p>
+      <ul>
+        <li>Facility licences and certifications (including GDP compliance where applicable)</li>
+        <li>Quality management system and audit history</li>
+        <li>Temperature validation records and monitoring systems</li>
+        <li>WMS capabilities for lot, serial number and expiry tracking</li>
+        <li>Insurance coverage and business continuity arrangements</li>
+        <li>Experience with regulated healthcare products</li>
+      </ul>
+      <blockquote>The 3PL is part of your supply chain. If a regulatory authority inspects your market access structure, they may review your logistics provider's facility and records. A poorly qualified 3PL creates compliance risk for the manufacturer, not just operational risk.</blockquote>
+      <h2>Medbridge's Approach</h2>
+      <p>Medbridge coordinates healthcare 3PL services through qualified logistics partners across Hong Kong, Singapore, Malaysia and Thailand. All partners are assessed against a documented qualification framework covering regulatory compliance, facility standards, traceability capabilities and service levels. Storage and fulfilment are managed under a structured service agreement with defined performance indicators and escalation procedures.</p>
+      <div class="callout"><strong>Note:</strong> Medbridge does not claim ownership of warehouse facilities. Services are delivered through approved healthcare logistics partners. GDP certification and cold-chain capability are confirmed on a market-specific and facility-specific basis.</div>
+    `
+  }
+];
+
+function formatDate(d) {
+  return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function getPostUrl(slug) {
+  return '/pages/blog/' + slug + '.html';
+}
+
+function getSlug() {
+  // reads from the page filename, or ?slug= param for single-template deployment
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('slug')) return params.get('slug');
+  const path = window.location.pathname;
+  const file = path.split('/').pop().replace('.html','');
+  return file !== 'post' ? file : null;
+}
+
+function renderPost() {
+  const slug = getSlug();
+  const post = POSTS.find(p => p.slug === slug);
+
+  if (!post) {
+    document.getElementById('breadcrumb-area').innerHTML = `<div class="breadcrumb"><div class="breadcrumb-inner"><a href="https://www.medbridge-global.com/index.html">Home</a><span>/</span><a href="/pages/blog/index.html">Blog</a><span>/</span><strong>Post not found</strong></div></div>`;
+    document.getElementById('hero-area').innerHTML = '';
+    document.getElementById('post-area').innerHTML = `<div class="not-found"><h2>Post not found</h2><p>This post may have been moved or is no longer available.</p><br><a href="/pages/blog/index.html" style="color:var(--teal);font-weight:600">← Back to Blog</a></div>`;
+    return;
+  }
+
+  document.title = post.title + ' | Medbridge';
+  document.getElementById('page-desc').content = post.excerpt;
+
+  const related = POSTS.filter(p => p.slug !== post.slug && (p.category === post.category || p.tags.some(t => post.tags.includes(t)))).slice(0,3);
+
+  document.getElementById('breadcrumb-area').innerHTML = `
+    <div class="breadcrumb">
+      <div class="breadcrumb-inner">
+        <a href="https://www.medbridge-global.com/index.html">Home</a>
+        <span>/</span>
+        <a href="/pages/blog/index.html">Blog</a>
+        <span>/</span>
+        <strong>${post.category}</strong>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('hero-area').innerHTML = `
+    <section class="post-hero">
+      <div class="post-hero-inner">
+        <div class="post-meta-top">
+          <span class="cat-badge">${post.category}</span>
+          <span class="post-date">${formatDate(post.date)}</span>
+          <span class="post-date">· ${post.readTime}</span>
+        </div>
+        <h1>${post.title}</h1>
+        <div class="post-excerpt">${post.excerpt}</div>
+      </div>
+    </section>
+  `;
+
+  const tocMatches = [...post.content.matchAll(/<h2>(.*?)<\/h2>/g)];
+  const tocItems = tocMatches.map((m,i) => {
+    const id = 'section-' + i;
+    return {id, text: m[1]};
+  });
+  const contentWithIds = post.content.replace(/<h2>/g, () => {
+    const item = tocItems.shift();
+    return `<h2 id="${item ? item.id : ''}">`;
+  });
+  const tocItemsCopy = [...post.content.matchAll(/<h2>(.*?)<\/h2>/g)].map((m,i) => ({id:'section-'+i,text:m[1]}));
+
+  const tocHTML = tocItemsCopy.length > 1 ? `
+    <div class="sidebar-card">
+      <h3>In this article</h3>
+      <ul class="toc-list">
+        ${tocItemsCopy.map(t=>`<li><a href="#${t.id}">${t.text}</a></li>`).join('')}
+      </ul>
+    </div>
+  ` : '';
+
+  document.getElementById('post-area').innerHTML = `
+    <div class="post-layout">
+      <article>
+        <a href="/pages/blog/index.html" class="back-link">← Back to Blog</a>
+        <div class="post-body">${contentWithIds}</div>
+        <div class="tags-row">${post.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <div class="share-row">
+          <span>Share this article:</span>
+          <button class="share-btn" onclick="copyLink()">Copy link</button>
+          <button class="share-btn" onclick="shareLinkedIn()">LinkedIn</button>
+        </div>
+        <div class="author-box">
+          <div class="author-avatar">MB</div>
+          <div class="author-info">
+            <div class="name">${post.author}</div>
+            <div class="role">Medbridge — Healthcare Market Access Insights</div>
+          </div>
+        </div>
+        ${related.length ? `
+        <div class="related-posts">
+          <h3>Related Articles</h3>
+          <div class="related-grid">
+            ${related.map(r=>`
+              <a href="${getPostUrl(r.slug)}" class="related-card">
+                <div class="r-cat">${r.category}</div>
+                <h4>${r.title}</h4>
+                <span class="r-link">Read article →</span>
+              </a>
+            `).join('')}
+          </div>
+        </div>` : ''}
+      </article>
+      <aside class="post-sidebar">
+        ${tocHTML}
+        <div class="sidebar-card">
+          <h3>Related Guides</h3>
+          <ul>
+            <li><a href="https://www.medbridge-global.com/pages/resources/hsa-medical-device-registration-singapore.html">HSA Singapore Registration Guide</a></li>
+            <li><a href="https://www.medbridge-global.com/pages/resources/mda-medical-device-registration-malaysia.html">MDA Malaysia Registration Guide</a></li>
+            <li><a href="https://www.medbridge-global.com/pages/resources/importer-of-record-healthcare-asia.html">Importer of Record in Asia</a></li>
+            <li><a href="https://www.medbridge-global.com/pages/resources/medical-device-licence-holding-asia.html">Licence Holding in Asia</a></li>
+          </ul>
+        </div>
+        <div class="cta-sidebar">
+          <h3>Ready to Enter Asian Markets?</h3>
+          <p>Get a practical market-entry assessment from our regional team.</p>
+          <a href="https://www.medbridge-global.com/pages/contact.html" class="btn-teal" style="display:block">Request Assessment</a>
+        </div>
+      </aside>
+    </div>
+  `;
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(()=>{
+    const btn = document.querySelector('.share-btn');
+    if(btn){btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy link',2000);}
+  });
+}
+
+function shareLinkedIn() {
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href),'_blank');
+}
+
+renderPost();
+</script>
+</body>
+</html>

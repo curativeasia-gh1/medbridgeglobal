@@ -96,4 +96,41 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/medical-device-classification-hong-kong.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/hsa-registration-singapore-foreign-manufacturers.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/importer-of-record-explained.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/licence-holding-distributor-transitions.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/mda-registration-malaysia-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.medbridge-global.com/pages/blog/healthcare-3pl-asia-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

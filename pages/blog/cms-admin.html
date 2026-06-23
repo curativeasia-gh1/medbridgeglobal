@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medbridge Blog CMS — Admin</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#062F5A;
+  --teal:#42B2A9;
+  --teal-hover:#35978F;
+  --slate:#68737D;
+  --aqua:#EAF7F5;
+  --grey:#F3F5F7;
+  --white:#FFFFFF;
+  --text:#1a2a3a;
+  --border:#e2e8f0;
+  --danger:#c0392b;
+}
+html{font-size:15px;background:var(--grey)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+
+/* SHELL */
+.shell{display:flex;flex:1;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--navy);min-height:100vh;display:flex;flex-direction:column;padding:0}
+.sidebar-logo{padding:1.25rem 1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-logo .brand{color:var(--teal);font-size:14px;font-weight:700;letter-spacing:0.02em}
+.sidebar-logo .version{color:rgba(255,255,255,0.3);font-size:11px;margin-top:2px}
+.sidebar-logo a{color:rgba(255,255,255,0.5);font-size:11px;display:block;margin-top:6px}
+.sidebar-logo a:hover{color:var(--teal)}
+.sidebar-nav{padding:0.75rem 0;flex:1}
+.nav-label{padding:0.75rem 1.25rem 0.25rem;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.3)}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:0.5625rem 1.25rem;font-size:13px;color:rgba(255,255,255,0.65);background:none;border:none;cursor:pointer;text-align:left;border-left:2px solid transparent;transition:all 0.15s}
+.nav-btn:hover{color:#fff;background:rgba(255,255,255,0.05)}
+.nav-btn.active{color:#fff;background:rgba(66,178,169,0.15);border-left-color:var(--teal)}
+.nav-btn .count{margin-left:auto;background:rgba(66,178,169,0.3);color:var(--teal);font-size:10px;padding:1px 6px;border-radius:8px;font-weight:700}
+
+.main{flex:1;display:flex;flex-direction:column;overflow:auto}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar h1{font-size:15px;font-weight:600;color:var(--navy)}
+.topbar .actions{display:flex;gap:8px}
+
+.content{flex:1;padding:1.5rem;max-width:1080px;width:100%}
+
+.btn{border-radius:6px;padding:0.5rem 1rem;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;transition:all 0.15s}
+.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.btn-primary:hover{background:var(--teal-hover);border-color:var(--teal-hover)}
+.btn-secondary{background:#fff;color:var(--navy);border-color:var(--border)}
+.btn-secondary:hover{background:var(--grey);border-color:var(--navy)}
+.btn-danger{background:#fff;color:var(--danger);border-color:#f5c6c6}
+.btn-danger:hover{background:#fef0f0}
+.btn-sm{padding:0.3125rem 0.75rem;font-size:12px}
+
+.view{display:none}
+.view.active{display:block}
+
+/* DASHBOARD */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.75rem}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.125rem 1.25rem}
+.stat .s-label{font-size:11px;color:var(--slate);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+.stat .s-val{font-size:26px;font-weight:700;color:var(--navy)}
+.stat .s-sub{font-size:11px;color:var(--teal);margin-top:2px;font-weight:600}
+.recent-table{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rt-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.rt-head h2{font-size:13px;font-weight:700;color:var(--navy)}
+.rt-row{display:grid;grid-template-columns:1fr 120px 100px 80px;gap:0.75rem;align-items:center;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);font-size:13px}
+.rt-row:last-child{border-bottom:none}
+.rt-row .post-name{color:var(--navy);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt-head-row{display:grid;grid-template-columns:1fr 120px 100px 80px;gap:0.75rem;padding:0.625rem 1.25rem;background:var(--grey);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)}
+.status-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.status-pill.published{background:#e8f5e9;color:#2e7d32}
+.status-pill.draft{background:#fff8e1;color:#f57f17}
+
+/* POST LIST */
+.post-list-header{display:flex;gap:10px;margin-bottom:1.25rem;align-items:center;flex-wrap:wrap}
+.post-list-header input{flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:0.4375rem 0.875rem;font-size:13px;outline:none}
+.post-list-header input:focus{border-color:var(--teal)}
+.post-list-header select{border:1px solid var(--border);border-radius:6px;padding:0.4375rem 0.875rem;font-size:13px;outline:none;color:var(--text)}
+.post-table{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.pt-head{display:grid;grid-template-columns:1fr 110px 90px 90px 110px;gap:0.75rem;padding:0.625rem 1.25rem;background:var(--grey);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)}
+.pt-row{display:grid;grid-template-columns:1fr 110px 90px 90px 110px;gap:0.75rem;align-items:center;padding:0.75rem 1.25rem;border-top:1px solid var(--border);font-size:13px}
+.pt-row .title{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.pt-row .title:hover{color:var(--teal)}
+.pt-actions{display:flex;gap:6px}
+.empty-state{text-align:center;padding:3rem;color:var(--slate);font-size:14px}
+
+/* EDITOR */
+.editor-layout{display:grid;grid-template-columns:1fr 280px;gap:1.5rem;align-items:start}
+.editor-panel{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
+.editor-panel h2{font-size:13px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1rem;padding-bottom:0.625rem;border-bottom:1px solid var(--border)}
+.form-group{margin-bottom:1rem}
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px}
+.form-input{width:100%;padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:6px;font-size:14px;color:var(--text);font-family:inherit;outline:none;transition:border-color 0.15s;background:var(--white)}
+.form-input:focus{border-color:var(--teal)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2368737D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.form-textarea{min-height:160px;resize:vertical;line-height:1.6}
+.rich-editor{border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.rich-toolbar{display:flex;gap:2px;padding:6px 8px;background:var(--grey);border-bottom:1px solid var(--border)}
+.tb-btn{border:none;background:transparent;border-radius:4px;padding:3px 6px;font-size:13px;cursor:pointer;color:var(--slate);font-family:inherit;transition:background 0.1s}
+.tb-btn:hover{background:var(--border)}
+.rich-body{min-height:220px;padding:10px 12px;font-size:14px;line-height:1.7;outline:none;color:var(--text)}
+.rich-body[contenteditable]:empty:before{content:attr(data-placeholder);color:var(--slate)}
+.rich-body h2{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1rem 0 0.5rem}
+.rich-body p{margin-bottom:0.75rem}
+.rich-body ul,.rich-body ol{margin:0.5rem 0 0.75rem 1.25rem}
+.rich-body blockquote{border-left:3px solid var(--teal);padding-left:0.875rem;color:var(--slate);font-style:italic;margin:0.75rem 0}
+.char-count{font-size:11px;color:var(--slate);text-align:right;margin-top:3px}
+.tag-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag-pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:3px 8px;border-radius:20px;background:var(--aqua);color:var(--navy);font-weight:600}
+.tag-pill button{border:none;background:none;cursor:pointer;color:var(--slate);font-size:14px;line-height:1;padding:0}
+.slug-display{font-size:11px;color:var(--slate);margin-top:4px;font-family:monospace}
+
+/* EXPORT */
+.export-section{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.25rem}
+.export-section h2{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:0.625rem}
+.export-section p{font-size:13px;color:var(--slate);line-height:1.5;margin-bottom:0.875rem}
+.code-block{background:var(--grey);border:1px solid var(--border);border-radius:6px;padding:0.875rem;font-family:monospace;font-size:12px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow:auto;color:var(--navy)}
+.instructions{background:var(--aqua);border:1px solid rgba(66,178,169,0.3);border-radius:8px;padding:1.125rem;font-size:13px;line-height:1.7;color:var(--text)}
+.instructions ol{margin-left:1.25rem;margin-top:0.5rem}
+.instructions li{margin-bottom:0.375rem}
+.instructions code{background:rgba(66,178,169,0.15);padding:1px 5px;border-radius:4px;font-family:monospace;font-size:12px;color:var(--navy)}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(6,47,90,0.5);z-index:200;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:10px;padding:1.5rem;width:360px;max-width:90vw}
+.modal h3{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.modal p{font-size:13px;color:var(--slate);margin-bottom:1.25rem;line-height:1.5}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+
+/* TOAST */
+#toast{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;display:none;align-items:center;gap:8px;z-index:300;border-left:3px solid var(--teal);box-shadow:0 4px 20px rgba(6,47,90,0.3)}
+</style>
+</head>
+<body>
+
+<div class="shell">
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">MEDBRIDGE CMS</div>
+    <div class="version">Blog Admin</div>
+    <a href="https://www.medbridge-global.com/pages/blog/index.html" target="_blank">↗ View live blog</a>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Content</div>
+    <button class="nav-btn active" onclick="showView('dashboard',this)">📊 Dashboard</button>
+    <button class="nav-btn" onclick="showView('posts',this)">📄 All Posts <span class="count" id="nav-count">0</span></button>
+    <button class="nav-btn" onclick="showView('editor',this)">✏️ New Post</button>
+    <div class="nav-label">Tools</div>
+    <button class="nav-btn" onclick="showView('export',this)">📤 Export &amp; Deploy</button>
+    <button class="nav-btn" onclick="showView('settings',this)">⚙️ Settings</button>
+  </div>
+</nav>
+
+<div class="main">
+<div class="topbar">
+  <h1 id="topbar-title">Dashboard</h1>
+  <div class="actions">
+    <button class="btn btn-secondary btn-sm" onclick="showView('export',null)">📤 Export</button>
+    <button class="btn btn-primary btn-sm" onclick="newPost()">+ New Post</button>
+  </div>
+</div>
+<div class="content" id="content">
+
+<!-- DASHBOARD -->
+<div class="view active" id="view-dashboard">
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="recent-table">
+    <div class="rt-head"><h2>Recent Posts</h2><button class="btn btn-secondary btn-sm" onclick="showView('posts',null)">View all</button></div>
+    <div class="rt-head-row"><div>Title</div><div>Category</div><div>Date</div><div>Status</div></div>
+    <div id="recent-table-body"></div>
+  </div>
+</div>
+
+<!-- POST LIST -->
+<div class="view" id="view-posts">
+  <div class="post-list-header">
+    <input type="search" id="list-search" placeholder="Search posts…" oninput="renderList()">
+    <select id="list-filter" onchange="renderList()">
+      <option value="all">All statuses</option>
+      <option value="published">Published</option>
+      <option value="draft">Draft</option>
+    </select>
+    <select id="list-cat" onchange="renderList()">
+      <option value="all">All categories</option>
+      <option>Regulatory</option><option>Market Entry</option><option>Logistics</option>
+      <option>Hong Kong</option><option>Singapore</option><option>Malaysia</option>
+      <option>Thailand</option><option>Compliance</option><option>Industry News</option>
+    </select>
+  </div>
+  <div class="post-table">
+    <div class="pt-head"><div>Title</div><div>Category</div><div>Date</div><div>Status</div><div>Actions</div></div>
+    <div id="post-table-body"></div>
+  </div>
+</div>
+
+<!-- EDITOR -->
+<div class="view" id="view-editor">
+  <div class="editor-layout">
+    <div>
+      <div class="editor-panel">
+        <h2>Post Content</h2>
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input class="form-input" id="e-title" placeholder="e.g. HSA Registration for Class C Devices in Singapore" oninput="autoSlug();updatePreview()">
+          <div class="slug-display" id="slug-preview">URL: /pages/blog/—</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Excerpt <span style="font-weight:400;text-transform:none">(shown on listing page)</span></label>
+          <textarea class="form-input form-textarea" id="e-excerpt" rows="3" placeholder="A short summary of this post…" oninput="countC();updatePreview()" style="min-height:70px"></textarea>
+          <div class="char-count"><span id="e-char">0</span>/200 characters</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Content</label>
+          <div class="rich-editor">
+            <div class="rich-toolbar">
+              <button class="tb-btn" onclick="fmt('bold')" title="Bold"><b>B</b></button>
+              <button class="tb-btn" onclick="fmt('italic')" title="Italic"><i style="font-style:italic">I</i></button>
+              <button class="tb-btn" onclick="fmtH2()" title="Heading 2">H2</button>
+              <button class="tb-btn" onclick="fmtH3()" title="Heading 3">H3</button>
+              <button class="tb-btn" onclick="fmt('insertUnorderedList')" title="Bullet list">• List</button>
+              <button class="tb-btn" onclick="fmt('insertOrderedList')" title="Numbered list">1. List</button>
+              <button class="tb-btn" onclick="fmtBQ()" title="Blockquote">" Quote</button>
+              <button class="tb-btn" onclick="insertTable()" title="Table">Table</button>
+              <button class="tb-btn" onclick="fmt('removeFormat')" title="Clear format">✕ Clear</button>
+            </div>
+            <div class="rich-body" id="e-content" contenteditable="true" data-placeholder="Write your article content here. Use the toolbar above for formatting." oninput="updatePreview()"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="editor-panel" style="position:sticky;top:0">
+        <h2>Post Settings</h2>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input form-select" id="e-cat" onchange="updatePreview()">
+            <option value="">Select…</option>
+            <option>Regulatory</option><option>Market Entry</option><option>Logistics</option>
+            <option>Hong Kong</option><option>Singapore</option><option>Malaysia</option>
+            <option>Thailand</option><option>Compliance</option><option>Industry News</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Author</label>
+          <input class="form-input" id="e-author" value="Medbridge Editorial">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Read time</label>
+          <input class="form-input" id="e-read" placeholder="e.g. 5 min read">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-input form-select" id="e-status">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Icon / Emoji</label>
+          <input class="form-input" id="e-icon" placeholder="e.g. 🇸🇬" value="📄" style="font-size:18px;width:80px">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tags (press Enter)</label>
+          <input class="form-input" id="e-tag-in" placeholder="Add tag…" onkeydown="addTag(event)">
+          <div class="tag-wrap" id="e-tags"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Featured post</label>
+          <select class="form-input form-select" id="e-featured">
+            <option value="false">No</option>
+            <option value="true">Yes — show in hero</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:0.5rem">
+          <button class="btn btn-secondary" onclick="savePost('draft')" style="flex:1">Save draft</button>
+          <button class="btn btn-primary" onclick="savePost('published')" style="flex:1">Publish</button>
+        </div>
+        <button class="btn btn-danger" id="delete-btn" onclick="confirmDelete()" style="width:100%;margin-top:8px;display:none">Delete post</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT -->
+<div class="view" id="view-export">
+  <div class="export-section">
+    <h2>How to deploy to medbridge-global.com</h2>
+    <div class="instructions">
+      The live site runs from the GitHub repository <code>curativeasia-gh1/medbridgeglobal</code>. To add the blog:
+      <ol>
+        <li>Download <code>blog.html</code> (index) and <code>post.html</code> (single post template) from this package</li>
+        <li>In the repo, create the folder <code>pages/blog/</code></li>
+        <li>Upload <code>blog.html</code> → rename to <code>index.html</code> inside <code>pages/blog/</code></li>
+        <li>Upload <code>post.html</code> → keep as <code>post.html</code> inside <code>pages/blog/</code></li>
+        <li>Each time you write a new post below, click <strong>Generate Post File</strong> — this creates a standalone <code>slug.html</code> file to drop into <code>pages/blog/</code></li>
+        <li>Update the shared <code>POSTS</code> array in both <code>index.html</code> and <code>post.html</code> with the new post's metadata</li>
+        <li>Push to GitHub — the site will update automatically</li>
+      </ol>
+    </div>
+  </div>
+  <div class="export-section">
+    <h2>Generate a post HTML file</h2>
+    <p>Select a post, then click Generate. Copy the output and save it as <code>pages/blog/[slug].html</code> in the GitHub repo.</p>
+    <div style="display:flex;gap:10px;margin-bottom:1rem;align-items:center">
+      <select class="form-input form-select" id="export-select" style="flex:1"></select>
+      <button class="btn btn-primary" onclick="generatePostFile()">Generate file</button>
+      <button class="btn btn-secondary" onclick="copyExport()">Copy</button>
+    </div>
+    <textarea id="export-output" class="form-input" style="font-family:monospace;font-size:11px;min-height:200px;resize:vertical" placeholder="Select a post and click Generate…" readonly></textarea>
+  </div>
+  <div class="export-section">
+    <h2>Export POSTS data array</h2>
+    <p>Copy this JSON and paste it into the <code>const POSTS = [...]</code> in both <code>index.html</code> and <code>post.html</code> to update the listing and routing.</p>
+    <button class="btn btn-secondary btn-sm" onclick="exportPostsJSON()" style="margin-bottom:10px">Refresh JSON</button>
+    <textarea id="posts-json" class="form-input" style="font-family:monospace;font-size:11px;min-height:160px;resize:vertical" readonly></textarea>
+    <button class="btn btn-secondary btn-sm" onclick="copyJSON()" style="margin-top:8px">Copy JSON</button>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="view" id="view-settings">
+  <div class="export-section">
+    <h2>Site settings</h2>
+    <div style="display:grid;gap:1rem;max-width:480px">
+      <div class="form-group">
+        <label class="form-label">Site base URL</label>
+        <input class="form-input" id="s-url" value="https://www.medbridge-global.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Blog path</label>
+        <input class="form-input" id="s-path" value="/pages/blog/">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Default author</label>
+        <input class="form-input" id="s-author" value="Medbridge Editorial">
+      </div>
+      <button class="btn btn-primary" onclick="saveSettings()">Save settings</button>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>Delete this post?</h3>
+    <p>This will remove the post from the CMS. You will also need to delete the corresponding HTML file from GitHub and remove the entry from the POSTS array in the site files.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="execDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast">✓ <span id="toast-msg"></span></div>
+
+<script>
+const CATS = ['Regulatory','Market Entry','Logistics','Hong Kong','Singapore','Malaysia','Thailand','Compliance','Industry News'];
+
+let posts = JSON.parse(localStorage.getItem('mb_posts') || 'null') || [
+  {id:1,slug:'medical-device-classification-hong-kong',title:'Understanding Medical Device Classification in Hong Kong',excerpt:'An overview of how medical devices are classified under the Hong Kong Medical Device Ordinance and what manufacturers need to know before applying for listing.',category:'Hong Kong',author:'Medbridge Editorial',readTime:'6 min read',status:'published',tags:['Hong Kong','Classification','MDD'],date:'2026-05-12',icon:'🏥',featured:false,content:'<h2>Regulatory Framework</h2><p>Hong Kong regulates medical devices under the Medical Device Ordinance (Cap. 630). The Medical Device Control Office (MDCO) within the Department of Health is the competent authority responsible for device listing and post-market surveillance.</p><h2>Classification</h2><p>Devices are classified into four risk classes: Class I (low risk) through Class IV (high risk). Understanding your device\'s classification is the critical first step in Hong Kong market entry planning.</p>'},
+  {id:2,slug:'hsa-registration-singapore-foreign-manufacturers',title:'HSA Registration: What Singapore Requires from Foreign Manufacturers',excerpt:'Key requirements from the Health Sciences Authority for medical device registrations in Singapore, including the ASEAN CSDT format.',category:'Singapore',author:'Medbridge Editorial',readTime:'8 min read',status:'published',tags:['Singapore','HSA','Registration'],date:'2026-05-28',icon:'🇸🇬',featured:true,content:'<h2>Regulatory Framework</h2><p>Singapore\'s Health Sciences Authority (HSA) regulates medical devices under the Health Products Act. The HSA\'s Medical Devices Branch administers product registration, dealer licensing and post-market surveillance.</p><h2>Local Product Owner</h2><p>Foreign manufacturers must appoint a Singapore-registered company as the Local Product Owner (LPO). The LPO holds the product registration and is legally responsible for post-market obligations.</p>'},
+  {id:3,slug:'importer-of-record-explained',title:'Importer of Record Services Explained for Medical Device Manufacturers',excerpt:'What does an Importer of Record actually do, and why does it matter for medical device market access in Asia?',category:'Logistics',author:'Medbridge Editorial',readTime:'5 min read',status:'published',tags:['IOR','Importation','Logistics'],date:'2026-06-02',icon:'📦',featured:false,content:'<h2>What is an Importer of Record?</h2><p>An Importer of Record (IOR) is a legal entity appointed to take responsibility for the importation of goods into a particular country. In medical device logistics, the IOR holds the compliance obligation at customs clearance — including import permits, declarations, duties and traceability.</p>'},
+  {id:4,slug:'licence-holding-distributor-transitions',title:'How Licence Holding Protects You During Distributor Transitions',excerpt:'Changing distributors in Asia without losing product registrations is possible — but only with the right structure in place.',category:'Regulatory',author:'Medbridge Editorial',readTime:'7 min read',status:'published',tags:['Licence Holding','Distributor','Strategy'],date:'2026-06-10',icon:'🔒',featured:false,content:'<h2>The Problem with Distributor-Held Registrations</h2><p>Across Hong Kong, Singapore, Malaysia and Thailand, product registrations are typically held in the name of a local entity — often the commercial distributor. This creates structural risk that manufacturers discover only when they need to change partners.</p>'},
+  {id:5,slug:'mda-registration-malaysia-guide',title:'MDA Medical Device Registration in Malaysia: Key Steps and Timelines',excerpt:'A practical guide to registering medical devices with Malaysia\'s Medical Device Authority.',category:'Malaysia',author:'Medbridge Editorial',readTime:'7 min read',status:'draft',tags:['Malaysia','MDA','Registration'],date:'2026-06-14',icon:'🇲🇾',featured:false,content:'<h2>Regulatory Framework</h2><p>Medical devices in Malaysia are regulated under the Medical Device Act 2012 (Act 737), administered by the Medical Device Authority (MDA). Both the establishment and the product must be registered before a device can be placed on the market.</p>'}
+];
+let nextId = Math.max(...posts.map(p=>p.id),0)+1;
+let editingId = null;
+let editTags = [];
+let pendingDeleteId = null;
+
+function persist(){localStorage.setItem('mb_posts',JSON.stringify(posts));}
+function formatDate(d){return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+function slugify(s){return s.toLowerCase().trim().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-');}
+
+/* ── VIEWS ── */
+function showView(v,btn){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  if(btn) btn.classList.add('active');
+  const titles={dashboard:'Dashboard',posts:'All Posts',editor:editingId?'Edit Post':'New Post',export:'Export & Deploy',settings:'Settings'};
+  document.getElementById('topbar-title').textContent=titles[v]||v;
+  if(v==='dashboard') renderDashboard();
+  if(v==='posts') renderList();
+  if(v==='export') {populateExportSelect();exportPostsJSON();}
+}
+
+/* ── DASHBOARD ── */
+function renderDashboard(){
+  const total=posts.length, pub=posts.filter(p=>p.status==='published').length, draft=posts.filter(p=>p.status==='draft').length;
+  const cats=[...new Set(posts.map(p=>p.category).filter(Boolean))].length;
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat"><div class="s-label">Total posts</div><div class="s-val">${total}</div><div class="s-sub">All time</div></div>
+    <div class="stat"><div class="s-label">Published</div><div class="s-val">${pub}</div><div class="s-sub">Live on site</div></div>
+    <div class="stat"><div class="s-label">Drafts</div><div class="s-val">${draft}</div><div class="s-sub">In progress</div></div>
+    <div class="stat"><div class="s-label">Categories</div><div class="s-val">${cats}</div><div class="s-sub">Active</div></div>
+  `;
+  document.getElementById('nav-count').textContent=total;
+  const recent=posts.slice().reverse().slice(0,8);
+  document.getElementById('recent-table-body').innerHTML=recent.map(p=>`
+    <div class="rt-row">
+      <div class="post-name" onclick="editPost(${p.id})" title="${p.title}">${p.title}</div>
+      <div>${p.category||'—'}</div>
+      <div>${p.date}</div>
+      <div><span class="status-pill ${p.status}">${p.status}</span></div>
+    </div>
+  `).join('');
+}
+
+/* ── POST LIST ── */
+function renderList(){
+  const q=(document.getElementById('list-search').value||'').toLowerCase();
+  const sf=document.getElementById('list-filter').value;
+  const cf=document.getElementById('list-cat').value;
+  const filtered=posts.filter(p=>{
+    const mq=!q||p.title.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q);
+    const ms=sf==='all'||p.status===sf;
+    const mc=cf==='all'||p.category===cf;
+    return mq&&ms&&mc;
+  }).reverse();
+  const tbody=document.getElementById('post-table-body');
+  if(!filtered.length){tbody.innerHTML='<div class="empty-state">No posts match your filters.</div>';return;}
+  tbody.innerHTML=filtered.map(p=>`
+    <div class="pt-row">
+      <div class="title" onclick="editPost(${p.id})">${p.title}</div>
+      <div>${p.category||'—'}</div>
+      <div>${p.date}</div>
+      <div><span class="status-pill ${p.status}">${p.status}</span></div>
+      <div class="pt-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editPost(${p.id})">Edit</button>
+        <a href="https://www.medbridge-global.com/pages/blog/${p.slug}.html" target="_blank" class="btn btn-secondary btn-sm">View</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── EDITOR ── */
+function newPost(){
+  editingId=null;editTags=[];
+  document.getElementById('e-title').value='';
+  document.getElementById('e-excerpt').value='';
+  document.getElementById('e-content').innerHTML='';
+  document.getElementById('e-cat').value='';
+  document.getElementById('e-author').value='Medbridge Editorial';
+  document.getElementById('e-read').value='';
+  document.getElementById('e-status').value='draft';
+  document.getElementById('e-icon').value='📄';
+  document.getElementById('e-featured').value='false';
+  document.getElementById('e-tag-in').value='';
+  document.getElementById('slug-preview').textContent='URL: /pages/blog/—';
+  document.getElementById('e-char').textContent='0';
+  document.getElementById('delete-btn').style.display='none';
+  renderTags();
+  showView('editor',null);
+}
+
+function editPost(id){
+  const p=posts.find(x=>x.id===id); if(!p)return;
+  editingId=id; editTags=[...p.tags];
+  document.getElementById('e-title').value=p.title;
+  document.getElementById('e-excerpt').value=p.excerpt;
+  document.getElementById('e-content').innerHTML=p.content;
+  document.getElementById('e-cat').value=p.category;
+  document.getElementById('e-author').value=p.author;
+  document.getElementById('e-read').value=p.readTime||'';
+  document.getElementById('e-status').value=p.status;
+  document.getElementById('e-icon').value=p.icon||'📄';
+  document.getElementById('e-featured').value=p.featured?'true':'false';
+  document.getElementById('slug-preview').textContent='URL: /pages/blog/'+p.slug+'.html';
+  document.getElementById('e-char').textContent=p.excerpt.length;
+  document.getElementById('delete-btn').style.display='block';
+  renderTags();
+  showView('editor',null);
+}
+
+function autoSlug(){
+  const t=document.getElementById('e-title').value;
+  const sl=slugify(t)||'—';
+  document.getElementById('slug-preview').textContent='URL: /pages/blog/'+(sl==='—'?'—':sl+'.html');
+}
+function countC(){document.getElementById('e-char').textContent=document.getElementById('e-excerpt').value.length;}
+function updatePreview(){}
+
+function savePost(statusOverride){
+  const title=document.getElementById('e-title').value.trim();
+  if(!title){alert('Please enter a post title.');return;}
+  const status=statusOverride||document.getElementById('e-status').value;
+  const data={
+    title,
+    slug: editingId ? posts.find(p=>p.id===editingId).slug : slugify(title),
+    excerpt:document.getElementById('e-excerpt').value,
+    content:document.getElementById('e-content').innerHTML,
+    category:document.getElementById('e-cat').value,
+    author:document.getElementById('e-author').value||'Medbridge Editorial',
+    readTime:document.getElementById('e-read').value||estimateReadTime(document.getElementById('e-content').innerText),
+    status,
+    icon:document.getElementById('e-icon').value||'📄',
+    featured:document.getElementById('e-featured').value==='true',
+    tags:[...editTags],
+    date:editingId ? posts.find(p=>p.id===editingId).date : new Date().toISOString().slice(0,10)
+  };
+  if(data.featured){posts.forEach(p=>{p.featured=false;});}
+  if(editingId){
+    const idx=posts.findIndex(p=>p.id===editingId);
+    posts[idx]={...posts[idx],...data};
+  } else {
+    posts.push({id:nextId++,...data});
+  }
+  persist();
+  toast(status==='published'?'Post published':'Draft saved');
+  showView('posts',null);
+}
+
+function estimateReadTime(text){
+  const words=(text||'').split(/\s+/).filter(Boolean).length;
+  return Math.max(1,Math.round(words/200))+' min read';
+}
+
+function addTag(e){if(e.key!=='Enter')return;e.preventDefault();const v=e.target.value.trim();if(v&&!editTags.includes(v)){editTags.push(v);renderTags();}e.target.value='';}
+function removeTag(i){editTags.splice(i,1);renderTags();}
+function renderTags(){document.getElementById('e-tags').innerHTML=editTags.map((t,i)=>`<span class="tag-pill">${t}<button onclick="removeTag(${i})" aria-label="Remove ${t}">×</button></span>`).join('');}
+
+/* FORMATTING */
+function fmt(cmd){document.getElementById('e-content').focus();document.execCommand(cmd,false,null);}
+function fmtH2(){document.getElementById('e-content').focus();document.execCommand('formatBlock',false,'h2');}
+function fmtH3(){document.getElementById('e-content').focus();document.execCommand('formatBlock',false,'h3');}
+function fmtBQ(){document.getElementById('e-content').focus();document.execCommand('formatBlock',false,'blockquote');}
+function insertTable(){
+  const t='<table><thead><tr><th>Column 1</th><th>Column 2</th><th>Column 3</th></tr></thead><tbody><tr><td>Cell</td><td>Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td><td>Cell</td></tr></tbody></table>';
+  document.getElementById('e-content').focus();
+  document.execCommand('insertHTML',false,t);
+}
+
+/* DELETE */
+function confirmDelete(){pendingDeleteId=editingId;document.getElementById('overlay').classList.add('open');}
+function closeModal(){document.getElementById('overlay').classList.remove('open');pendingDeleteId=null;}
+function execDelete(){
+  posts=posts.filter(p=>p.id!==pendingDeleteId);
+  persist();closeModal();toast('Post deleted');showView('posts',null);
+}
+
+/* EXPORT */
+function populateExportSelect(){
+  const sel=document.getElementById('export-select');
+  sel.innerHTML=posts.map(p=>`<option value="${p.id}">${p.title}</option>`).join('');
+}
+
+function generatePostFile(){
+  const id=parseInt(document.getElementById('export-select').value);
+  const p=posts.find(x=>x.id===id); if(!p)return;
+  const html=buildPostHTML(p);
+  document.getElementById('export-output').value=html;
+  toast('File generated — copy and save as pages/blog/'+p.slug+'.html');
+}
+
+function buildPostHTML(p){
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${p.title} | Medbridge</title>
+<meta name="description" content="${p.excerpt}">
+<meta property="og:title" content="${p.title}">
+<meta property="og:description" content="${p.excerpt}">
+<meta property="og:image" content="https://www.medbridge-global.com/images/og-default.png">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.medbridge-global.com/pages/blog/${p.slug}.html">
+</head>
+<body>
+<!-- This file was generated by the Medbridge Blog CMS -->
+<!-- To render correctly, include the shared CSS from post.html -->
+<!-- Post slug: ${p.slug} | Category: ${p.category} | Date: ${p.date} -->
+<!-- CONTENT BELOW — integrate into post.html template or standalone page -->
+<script>
+var POST_DATA = ${JSON.stringify({slug:p.slug,title:p.title,excerpt:p.excerpt,category:p.category,author:p.author,readTime:p.readTime,tags:p.tags,date:p.date,icon:p.icon,content:p.content},null,2)};
+// Redirect to post.html template with this slug
+window.location.replace('/pages/blog/post.html?slug=${p.slug}');
+<\/script>
+</body>
+</html>`;
+}
+
+function copyExport(){
+  const ta=document.getElementById('export-output');
+  if(!ta.value){toast('Nothing to copy — generate first');return;}
+  navigator.clipboard.writeText(ta.value).then(()=>toast('Copied to clipboard'));
+}
+
+function exportPostsJSON(){
+  const safe=posts.map(p=>({slug:p.slug,title:p.title,excerpt:p.excerpt,category:p.category,tags:p.tags,author:p.author,readTime:p.readTime,date:p.date,icon:p.icon,featured:p.featured,status:p.status}));
+  document.getElementById('posts-json').value=JSON.stringify(safe,null,2);
+}
+
+function copyJSON(){
+  navigator.clipboard.writeText(document.getElementById('posts-json').value).then(()=>toast('JSON copied'));
+}
+
+function saveSettings(){toast('Settings saved');}
+
+/* TOAST */
+function toast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.style.display='flex';
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.style.display='none',2800);
+}
+
+renderDashboard();
+</script>
+</body>
+</html>

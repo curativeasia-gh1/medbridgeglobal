@@ -64,3 +64,6 @@ Market-Entry Assessment: https://www.medbridge-global.com/pages/contact.html
 - Thailand: https://www.medbridge-global.com/pages/thailand.html
 - Healthcare Specialities: https://www.medbridge-global.com/pages/specialities.html
 - Contact: https://www.medbridge-global.com/pages/contact.html
+## Blog
+- URL: https://www.medbridge-global.com/pages/blog/index.html
+- Content: Healthcare market access insights, medical device registration guides, and regulatory updates for Hong Kong, Singapore, Malaysia and Thailand.
