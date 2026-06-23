@@ -2,8 +2,14 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.medbridge.global/sitemap.xml
+Sitemap: https://www.medbridge-global.com/sitemap.xml
 
 # Disallow admin or private paths if added later
 Disallow: /admin/
 Disallow: /private/
+
+# Content Signals (https://contentsignals.org/)
+# AI agents may use site content for information retrieval (ai-input=yes)
+# Content should not be used for model training (ai-train=no)
+# Standard web search indexing is permitted (search=yes)
+Content-Signal: ai-train=no, search=yes, ai-input=yes

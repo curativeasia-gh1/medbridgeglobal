@@ -1,0 +1,9 @@
+# Cloudflare Pages response headers
+# RFC 8288 Link headers for agent/AI discovery
+
+/*
+  Link: <https://www.medbridge-global.com/llms.txt>; rel="service-doc", <https://www.medbridge-global.com/.well-known/api-catalog>; rel="api-catalog", <https://www.medbridge-global.com/sitemap.xml>; rel="describedby"; type="application/xml"
+  X-Robots-Tag: index, follow
+
+/
+  Link: <https://www.medbridge-global.com/llms.txt>; rel="service-doc", <https://www.medbridge-global.com/.well-known/api-catalog>; rel="api-catalog", <https://www.medbridge-global.com/sitemap.xml>; rel="describedby"; type="application/xml"
