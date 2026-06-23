@@ -1,7 +1,7 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-blog-cms",
-	"pages_build_output_dir": "./public",
+	"pages_build_output_dir": ".",
 	"compatibility_date": "2026-06-21",
 	"d1_databases": [
 		{
